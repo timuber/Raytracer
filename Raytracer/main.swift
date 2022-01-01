@@ -7,10 +7,15 @@
 
 import Foundation
 
-func rayColor(_ ray: Ray, _ world: Hittable) -> Color {
+func rayColor(_ ray: Ray, _ world: Hittable, depth: Int = 0) -> Color {
+  if depth <= 0 {
+    return Color()
+  }
+  
   var rec = HitRecord()
-  if world.hit(ray: ray, min: 0, max: Double.infinity, rec: &rec) {
-    return 0.5 * (rec.normal + Color(x: 1, y: 1, z: 1))
+  if world.hit(ray: ray, min: 0.001, max: Double.infinity, rec: &rec) {
+    let target = rec.point + Point3.randomInHemisphere(normal: rec.normal)
+    return 0.5 * rayColor(Ray(origin: rec.point, dir: target - rec.point), world, depth: depth - 1)
   }
   let normDirection = ray.dir.normalized
   let t = 0.5 * (normDirection.y + 1.0)
@@ -22,7 +27,8 @@ func main() {
   let aspectRatio: Double = 16.0/9.0
   let imageWidth = 400
   let imageHeight = Int(Double(imageWidth)/aspectRatio)
-  let samplesPerPixel = 8
+  let samplesPerPixel = 16
+  let maxDepth = 10
   
   // World
   let world = HittableList()
@@ -49,7 +55,7 @@ func main() {
         let u = (Double(i) + Double.random(in: 0..<1)) / Double(imageWidth-1)
         let v = (Double(j) + Double.random(in: 0..<1)) / Double(imageHeight-1)
         let ray = camera.ray(u: u, v: v)
-        pixelColor += rayColor(ray, world)
+        pixelColor += rayColor(ray, world, depth: maxDepth)
       }
       printColor(pixelColor, samplesPerPixel: samplesPerPixel, to: &output)
     }

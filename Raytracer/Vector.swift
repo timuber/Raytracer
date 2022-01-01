@@ -92,6 +92,31 @@ extension Vec3 {
   }
 }
 
+extension Vec3 {
+  static func random(min: Double = 0.0, max: Double = 1.0) -> Vec3 {
+    Vec3(x: Double.random(in: min..<max),
+         y: Double.random(in: min..<max),
+         z: Double.random(in: min..<max))
+  }
+  
+  static func randomInUnitSphere() -> Vec3 {
+    while true {
+      let p = Vec3.random(min: -1, max: 1)
+      if p.lengthSquared >= 1 { continue }
+      return p
+    }
+  }
+  
+  static func randomUnitVector() -> Vec3 {
+    return randomInUnitSphere().normalized
+  }
+  
+  static func randomInHemisphere(normal: Vec3) -> Vec3 {
+    let unitSphere = Vec3.randomInUnitSphere()
+    return dot(unitSphere, normal) > 0 ? unitSphere : -unitSphere
+  }
+}
+
 func dot(_ left: Vec3, _ right: Vec3) -> Double {
   return left.x * right.x + left.y * right.y + left.z * right.z
 }

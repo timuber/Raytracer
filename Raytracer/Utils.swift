@@ -23,9 +23,9 @@ func printColor<Target>(_ color: Color, samplesPerPixel: Int = 1, to output: ino
   var b = color.z
   
   let scale = 1.0 / Double(samplesPerPixel)
-  r *= scale
-  g *= scale
-  b *= scale
+  r = sqrt(r * scale)
+  g = sqrt(g * scale)
+  b = sqrt(b * scale)
   
   let ir = Int(256 * clamp(r, 0, 0.999))
   let ig = Int(256 * clamp(g, 0, 0.999))
