@@ -137,3 +137,10 @@ func cross(_ left: Vec3, _ right: Vec3) -> Vec3 {
 func reflect(_ vec: Vec3, _ normal: Vec3) -> Vec3 {
   return vec - 2 * dot(vec, normal) * normal
 }
+
+func refract(vector: Vec3, normal: Vec3, refractiveIndexRatio: Double) -> Vec3 {
+  let cosTheta = min(dot(-vector, normal), 1.0)
+  let refractPerp = refractiveIndexRatio * (vector + cosTheta * normal)
+  let refractParallel = -sqrt(abs(1.0 - refractPerp.lengthSquared)) * normal
+  return refractPerp + refractParallel
+}

@@ -45,3 +45,37 @@ final class Metal: Material {
     return dot(scattered.dir, rec.normal) > 0
   }
 }
+
+final class Dielectric: Material {
+  let indexOfRefraction: Double
+  
+  init(indexOfRefraction: Double) {
+    self.indexOfRefraction = indexOfRefraction
+  }
+  
+  func scatter(ray: Ray, rec: HitRecord, attenuation: inout Color, scattered: inout Ray) -> Bool {
+    attenuation = Color(x: 1, y: 1, z: 1)
+    let refractionRatio = rec.isFrontFace ? (1/indexOfRefraction) : indexOfRefraction
+    let unitDirection = ray.dir.normalized
+    let cosTheta = min(dot(-unitDirection, rec.normal), 1.0)
+    let sinTheta = sqrt(1 - cosTheta*cosTheta)
+    let cantRefract = refractionRatio * sinTheta > 1.0
+    let direction: Vec3
+    if cantRefract || reflectance(cosTheta, refractionRatio) > Double.random(in: 0..<1) {
+      direction = reflect(unitDirection, rec.normal)
+    } else {
+      direction = refract(vector: unitDirection, normal: rec.normal, refractiveIndexRatio: refractionRatio)
+    }
+    scattered = Ray(origin: rec.point, dir: direction)
+    return true
+  }
+  
+
+}
+
+private func reflectance(_ cosine: Double, _ refIdx: Double) -> Double {
+  // Use Schlick's approximation for reflectance
+  var r0 = (1 - refIdx) / (1 + refIdx)
+  r0 = r0 * r0
+  return r0 + (1 - r0) * pow(1 - cosine, 5)
+}

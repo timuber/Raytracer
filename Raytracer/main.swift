@@ -38,11 +38,12 @@ func main() {
   let world = HittableList()
   let materialGround = Lambertian(albedo: Color(x: 0.8, y: 0.8, z: 0))
   let materialCenter = Lambertian(albedo: Color(x: 0.7, y: 0.3, z: 0.3))
-  let materialLeft = Metal(albedo: Color(x: 0.8, y: 0.8, z: 0.8), fuzz: 0.7)
+  let materialLeft = Dielectric(indexOfRefraction: 1.5)
   let materialRight = Metal(albedo: Color(x: 0.8, y: 0.6, z: 0.2), fuzz: 0.1)
   world.add(Sphere(center: Point3(x: 0, y: -100.5, z: -1), radius: 100, material: materialGround))
   world.add(Sphere(center: Point3(x: 0, y: 0, z: -1), radius: 0.5, material: materialCenter))
   world.add(Sphere(center: Point3(x: -1, y: 0, z: -1), radius: 0.5, material: materialLeft))
+  world.add(Sphere(center: Point3(x: -1, y: 0, z: -1), radius: -0.4, material: materialLeft))
   world.add(Sphere(center: Point3(x: 1, y: 0, z: -1), radius: 0.5, material: materialRight))
   
   // Camera
