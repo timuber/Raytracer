@@ -117,6 +117,13 @@ extension Vec3 {
   }
 }
 
+extension Vec3 {
+  var isNearZero: Bool {
+    let epsilon = 0.00000001
+    return abs(x) < epsilon && abs(y) < epsilon && abs(z) < epsilon
+  }
+}
+
 func dot(_ left: Vec3, _ right: Vec3) -> Double {
   return left.x * right.x + left.y * right.y + left.z * right.z
 }
@@ -125,4 +132,8 @@ func cross(_ left: Vec3, _ right: Vec3) -> Vec3 {
   return Vec3(x: left.y * right.z - left.z * right.y,
               y: left.z * right.x - left.x * right.z,
               z: left.x * right.y - left.y * right.x)
+}
+
+func reflect(_ vec: Vec3, _ normal: Vec3) -> Vec3 {
+  return vec - 2 * dot(vec, normal) * normal
 }

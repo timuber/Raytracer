@@ -14,8 +14,12 @@ func rayColor(_ ray: Ray, _ world: Hittable, depth: Int = 0) -> Color {
   
   var rec = HitRecord()
   if world.hit(ray: ray, min: 0.001, max: Double.infinity, rec: &rec) {
-    let target = rec.point + Point3.randomInHemisphere(normal: rec.normal)
-    return 0.5 * rayColor(Ray(origin: rec.point, dir: target - rec.point), world, depth: depth - 1)
+    var scattered = Ray()
+    var attenuation = Color()
+    if (rec.material!.scatter(ray: ray, rec: rec, attenuation: &attenuation, scattered: &scattered)) {
+      return attenuation * rayColor(scattered, world, depth: depth - 1)
+    }
+    return Color()
   }
   let normDirection = ray.dir.normalized
   let t = 0.5 * (normDirection.y + 1.0)
@@ -32,8 +36,14 @@ func main() {
   
   // World
   let world = HittableList()
-  world.add(Sphere(center: Point3(x: 0, y: 0, z: -1), radius: 0.5))
-  world.add(Sphere(center: Point3(x: 0, y: -100.5, z: -1), radius: 100))
+  let materialGround = Lambertian(albedo: Color(x: 0.8, y: 0.8, z: 0))
+  let materialCenter = Lambertian(albedo: Color(x: 0.7, y: 0.3, z: 0.3))
+  let materialLeft = Metal(albedo: Color(x: 0.8, y: 0.8, z: 0.8), fuzz: 0.7)
+  let materialRight = Metal(albedo: Color(x: 0.8, y: 0.6, z: 0.2), fuzz: 0.1)
+  world.add(Sphere(center: Point3(x: 0, y: -100.5, z: -1), radius: 100, material: materialGround))
+  world.add(Sphere(center: Point3(x: 0, y: 0, z: -1), radius: 0.5, material: materialCenter))
+  world.add(Sphere(center: Point3(x: -1, y: 0, z: -1), radius: 0.5, material: materialLeft))
+  world.add(Sphere(center: Point3(x: 1, y: 0, z: -1), radius: 0.5, material: materialRight))
   
   // Camera
   let camera = Camera(aspectRatio: aspectRatio)

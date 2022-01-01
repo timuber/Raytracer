@@ -10,15 +10,12 @@ import Foundation
 final class Sphere {
   let center: Point3
   let radius: Double
+  let material: Material
   
-  init() {
-    self.center = Point3()
-    self.radius = 0
-  }
-  
-  init(center: Point3, radius: Double) {
+  init(center: Point3 = Point3(), radius: Double = 0, material: Material) {
     self.center = center
     self.radius = radius
+    self.material = material
   }
 }
 
@@ -47,6 +44,7 @@ extension Sphere: Hittable {
     rec.point = ray.at(root)
     let outwardNormal = (rec.point - center) / radius
     rec.setFaceNormal(ray: ray, outwardNormal: outwardNormal)
+    rec.material = material
     
     return true
   }

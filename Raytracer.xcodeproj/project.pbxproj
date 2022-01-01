@@ -15,6 +15,7 @@
 		7401FA6B2780B66C007550C1 /* HittableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401FA6A2780B66C007550C1 /* HittableList.swift */; };
 		7401FA6D2780B78B007550C1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401FA6C2780B78B007550C1 /* Utils.swift */; };
 		7401FA6F2780B9A4007550C1 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401FA6E2780B9A4007550C1 /* Camera.swift */; };
+		7401FA712780FEDC007550C1 /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7401FA702780FEDC007550C1 /* Material.swift */; };
 		74C5906E27808C40009037E7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C5906D27808C40009037E7 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 		7401FA6A2780B66C007550C1 /* HittableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HittableList.swift; sourceTree = "<group>"; };
 		7401FA6C2780B78B007550C1 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		7401FA6E2780B9A4007550C1 /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		7401FA702780FEDC007550C1 /* Material.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		74C5906A27808C40009037E7 /* Raytracer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Raytracer; sourceTree = BUILT_PRODUCTS_DIR; };
 		74C5906D27808C40009037E7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 				7401FA682780B3C5007550C1 /* Sphere.swift */,
 				7401FA6C2780B78B007550C1 /* Utils.swift */,
 				7401FA6E2780B9A4007550C1 /* Camera.swift */,
+				7401FA702780FEDC007550C1 /* Material.swift */,
 			);
 			path = Raytracer;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7401FA712780FEDC007550C1 /* Material.swift in Sources */,
 				7401FA65278097E4007550C1 /* Ray.swift in Sources */,
 				7401FA672780B36A007550C1 /* Hittable.swift in Sources */,
 				7401FA692780B3C5007550C1 /* Sphere.swift in Sources */,

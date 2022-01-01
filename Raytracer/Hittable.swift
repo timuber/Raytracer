@@ -12,6 +12,7 @@ final class HitRecord {
   var normal = Vec3()
   var t = 0.0
   var isFrontFace = false
+  var material: Material? = nil
   
   func setFaceNormal(ray: Ray, outwardNormal: Vec3) {
     isFrontFace = dot(ray.dir, outwardNormal) < 0
